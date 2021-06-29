@@ -21,3 +21,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+button {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  outline: none;
+}
+
+input {
+  outline: none;
+}

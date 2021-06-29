@@ -3,13 +3,18 @@ import Header from 'components/Header'
 import List from 'components/List'
 import Form from 'components/Form'
 import Footer from 'components/Footer'
+import { Pessoa } from 'types'
 
-export default function Home() {
+type Props = {
+  pessoas: Pessoa[]
+}
+
+export default function Home({ pessoas }: Props) {
   return (
     <Wrapper>
       <Container>
         <Header />
-        <List />
+        <List pessoas={pessoas} />
         <Form />
         <Footer />
       </Container>
@@ -29,3 +34,15 @@ const Container = styled.div`
     margin-bottom: 1.3rem;
   }
 `
+
+export async function getStaticProps(context) {
+  const pessoas = [
+    { id: 'a', name: 'Lucas' },
+    { id: 'b', name: 'Luis Henrique' },
+  ]
+  return {
+    props: {
+      pessoas,
+    },
+  }
+}

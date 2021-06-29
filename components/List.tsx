@@ -1,12 +1,16 @@
 import styled from 'styled-components'
+import { Pessoa } from 'types'
 
-export default function List() {
+type Props = {
+  pessoas: Pessoa[]
+}
+
+export default function List({ pessoas }: Props) {
   return (
     <Wrapper>
-      <Item />
-      <Item />
-      <Item />
-      <Item />
+      {pessoas.map((p) => (
+        <Item key={p.id} pessoa={p} />
+      ))}
     </Wrapper>
   )
 }
@@ -21,10 +25,15 @@ const Wrapper = styled.div`
 /**
  * ITEM
  */
-function Item() {
+
+type PropsItem = {
+  pessoa: Pessoa
+}
+
+function Item({ pessoa }: PropsItem) {
   return (
     <WrapperItem>
-      <Name>Item X</Name>
+      <Name>{pessoa.name}</Name>
       <Controls>
         <Control>Editar</Control>
         <Control>Excluir</Control>
@@ -34,13 +43,40 @@ function Item() {
 }
 
 const WrapperItem = styled.div`
-  padding: .6rem 1rem;
+  padding: 0.6rem 1rem;
+  text-transform: uppercase;
+  font-size: 1rem;
   :nth-child(even) {
     background: rgba(0, 0, 0, 0.1);
+  }
+  :hover {
+    section {
+      height: 1.7rem;
+    }
   }
 `
 const Name = styled.div``
 
-const Controls = styled.div``
+const Controls = styled.section`
+  height: 0;
+  overflow: hidden;
+  transition: .2s;
+`
 
-const Control = styled.button``
+const Control = styled.button`
+  font-size: 0.6rem;
+  background: none;
+  border: 1px solid #c466d2;
+  color: #c466d2;
+  padding: 0.15rem 0.7rem;
+  background: white;
+  :not(:last-child) {
+    margin-right: 0.5rem;
+  }
+  transition: all 0.2s;
+  :hover {
+    cursor: pointer;
+    color: #e94cb4;
+    border-color: #e94cb4;
+  }
+`
