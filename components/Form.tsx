@@ -1,10 +1,27 @@
+import axios from 'axios'
+import { useState } from 'react'
 import styled from 'styled-components'
-
-export default function Form() {
+import { Pessoa } from 'types'
+type Props = {
+  listadePessoas: Pessoa[]
+}
+export default function Form({ listadePessoas }: Props) {
+  const [pessoas, setPessoas] = useState<Pessoa[]>(listadePessoas)
+  async function handleSave(e:any) {
+    e.preventDefault()
+    console.log(pessoas)
+    const { data: pessoa } = await axios.post('/api/add', {
+      nome: e.target.querySelector('input[name=nome]').value,
+    })
+    setPessoas([...pessoas, pessoa])
+    e.target.querySelector('input').value = ''
+  }
   return (
     <Wrapper>
-      <Input />
-      <Button type="button">Salvar</Button>
+      <Formm onSubmit={handleSave}>
+        <Input name='nome'/>
+        <Button type="submit">Salvar</Button>
+      </Formm>
     </Wrapper>
   )
 }
@@ -15,6 +32,8 @@ const Wrapper = styled.div`
   overflow: hidden;
   box-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.4);
   border: 1px solid #b856d0;
+`
+const Formm = styled.form`
 `
 
 const Input = styled.input`
