@@ -4,16 +4,17 @@ import styled from 'styled-components'
 import { Pessoa } from 'types'
 
 type Props = {
-  listadePessoas: Pessoa[]
+  pessoas: Pessoa[]
+  handleDelete: (id: string) => void
 }
 
-export default function List({ listadePessoas }: Props) {
-  const [pessoas, setPessoas] = useState<Pessoa[]>(listadePessoas)
+export default function List({ pessoas, handleDelete }: Props) {
   return (
     <Wrapper>
-      {pessoas.map((p) => (
-        <Item key={p._id} listadePessoas={p}/>
-      ))}
+      {pessoas &&
+        pessoas.map((p) => (
+          <Item key={p._id} pessoa={p} handleDelete={handleDelete} />
+        ))}
     </Wrapper>
   )
 }
@@ -30,27 +31,17 @@ const Wrapper = styled.div`
  */
 
 type PropsItem = {
-  listadePessoas: Pessoa[]
+  pessoa: Pessoa
+  handleDelete: (id: string) => void
 }
 
-function Item({ listadePessoas }: PropsItem) {
-  const [pessoas, setPessoas] = useState<Pessoa[]>(listadePessoas)
-  async function handleDelete(id:string) {
-    console.log({ id })
-    const result = await axios.delete(`/api/pessoa/delete/${id}`)
-    console.log(result);
-    // aqui é onde as pessoas são filtradas
-    const pessoasFiltradas = pessoas.filter(p=>p._id !== id)
-    console.log({pessoasFiltradas})
-    // aqui é o que faltou, o react precisa saber que deve atualizar as pessoas com o novo resultado
-    setPessoas(pessoasFiltradas)
-  }
+function Item({ pessoa, handleDelete }: PropsItem) {
   return (
     <WrapperItem>
-      <Name>{}</Name>
+      <Name>{pessoa.name}</Name>
       <Controls>
         <Control>Editar</Control>
-        <Control onClick={()=> handleDelete(p._id)}>Excluir</Control>
+        <Control onClick={() => handleDelete(pessoa._id)}>Excluir</Control>
       </Controls>
     </WrapperItem>
   )
@@ -74,7 +65,7 @@ const Name = styled.div``
 const Controls = styled.section`
   height: 0;
   overflow: hidden;
-  transition: .2s;
+  transition: 0.2s;
 `
 
 const Control = styled.button`

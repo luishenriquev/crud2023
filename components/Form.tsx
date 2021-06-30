@@ -2,24 +2,21 @@ import axios from 'axios'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { Pessoa } from 'types'
-type Props = {
-  listadePessoas: Pessoa[]
-}
-export default function Form({ listadePessoas }: Props) {
-  const [pessoas, setPessoas] = useState<Pessoa[]>(listadePessoas)
-  async function handleSave(e:any) {
-    e.preventDefault()
-    console.log(pessoas)
-    const { data: pessoa } = await axios.post('/api/add', {
-      nome: e.target.querySelector('input[name=nome]').value,
-    })
-    setPessoas([...pessoas, pessoa])
-    e.target.querySelector('input').value = ''
-  }
+
+export default function Form() {
+  // async function handleSave(e:any) {
+  //   e.preventDefault()
+  //   console.log(pessoas)
+  //   const { data: pessoa } = await axios.post('/api/add', {
+  //     nome: e.target.querySelector('input[name=nome]').value,
+  //   })
+  //   setPessoas([...pessoas, pessoa])
+  //   e.target.querySelector('input').value = ''
+  // }
   return (
     <Wrapper>
-      <Formm onSubmit={handleSave}>
-        <Input name='nome'/>
+      <Formm>
+        <Input name="nome" />
         <Button type="submit">Salvar</Button>
       </Formm>
     </Wrapper>
@@ -34,6 +31,8 @@ const Wrapper = styled.div`
   border: 1px solid #b856d0;
 `
 const Formm = styled.form`
+  display: flex;
+  width: 100%;
 `
 
 const Input = styled.input`
@@ -44,7 +43,7 @@ const Input = styled.input`
   color: white;
   text-transform: uppercase;
   font-size: 1rem;
-  transition: background .2s;
+  transition: background 0.2s;
   :focus {
     background: black;
   }
