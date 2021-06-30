@@ -1,4 +1,4 @@
 export type Pessoa = {
-  id: string
+  _id: string
   name: string
 }

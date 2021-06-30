@@ -4,18 +4,19 @@ import List from 'components/List'
 import Form from 'components/Form'
 import Footer from 'components/Footer'
 import { Pessoa } from 'types'
+import axios from 'axios'
 
 type Props = {
-  pessoas: Pessoa[]
+  listadePessoas: Pessoa[]
 }
 
-export default function Home({ pessoas }: Props) {
+export default function Home({ listadePessoas }: Props) {
   return (
     <Wrapper>
       <Container>
         <Header />
-        <List pessoas={pessoas} />
-        <Form />
+        <List listadePessoas={listadePessoas} />
+        <Form listadePessoas={listadePessoas}/>
         <Footer />
       </Container>
     </Wrapper>
@@ -35,14 +36,11 @@ const Container = styled.div`
   }
 `
 
-export async function getStaticProps(context) {
-  const pessoas = [
-    { id: 'a', name: 'Lucas' },
-    { id: 'b', name: 'Luis Henrique' },
-  ]
+export async function getStaticProps(context:any) {
+  const {data:listadePessoas} = await axios.get('https://apinestjs.herokuapp.com/lista')
   return {
     props: {
-      pessoas,
+      listadePessoas,
     },
   }
 }
