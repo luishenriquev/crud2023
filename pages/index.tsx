@@ -5,7 +5,7 @@ import Form from 'components/Form'
 import Footer from 'components/Footer'
 import { Pessoa } from 'types'
 import axios from 'axios'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 type Props = {
   listadePessoas: Pessoa[]
@@ -16,7 +16,7 @@ export default function Home({ listadePessoas }: Props) {
 
   async function handleDelete(id: string) {
     console.log({ id })
-    const result = await axios.delete(`/api/pessoa/delete/${id}`)
+    const result = await axios.delete(`/api/delete/${id}`)
     console.log(result)
     // aqui é onde as pessoas são filtradas
     const pessoasFiltradas = pessoas.filter((p) => p._id !== id)
@@ -24,13 +24,26 @@ export default function Home({ listadePessoas }: Props) {
     // aqui é o que faltou, o react precisa saber que deve atualizar as pessoas com o novo resultado
     setPessoas(pessoasFiltradas)
   }
+  async function handleSave(e:React.FormEvent<HTMLFormElement>) {
+      e.preventDefault()
+
+      const inputNome = e.currentTarget.elements[0] as HTMLInputElement
+      const novaPessoa = {
+        nome: inputNome.value
+      }
+      
+      const { data: pessoa } = await axios.post('/api/save/add', novaPessoa)
+      setPessoas([...pessoas, pessoa])
+      inputNome.value = ""
+      // e.target.querySelector('input').value = ''
+    }
 
   return (
     <Wrapper>
       <Container>
         <Header />
         <List pessoas={pessoas} handleDelete={handleDelete} />
-        <Form />
+        <Form  handleSave={handleSave}/>
         <Footer />
       </Container>
     </Wrapper>

@@ -2,20 +2,13 @@ import axios from 'axios'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { Pessoa } from 'types'
-
-export default function Form() {
-  // async function handleSave(e:any) {
-  //   e.preventDefault()
-  //   console.log(pessoas)
-  //   const { data: pessoa } = await axios.post('/api/add', {
-  //     nome: e.target.querySelector('input[name=nome]').value,
-  //   })
-  //   setPessoas([...pessoas, pessoa])
-  //   e.target.querySelector('input').value = ''
-  // }
+type Props ={
+  handleSave: (e: React.FormEvent<HTMLFormElement>) => void
+}
+export default function Form({handleSave}:Props) {
   return (
     <Wrapper>
-      <Formm>
+      <Formm onSubmit={handleSave}>
         <Input name="nome" />
         <Button type="submit">Salvar</Button>
       </Formm>
