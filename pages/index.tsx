@@ -15,12 +15,9 @@ export default function Home({ listadePessoas }: Props) {
   const [pessoas, setPessoas] = useState<Pessoa[]>(listadePessoas)
 
   async function handleDelete(id: string) {
-    console.log({ id })
     const result = await axios.delete(`/api/delete/${id}`)
-    console.log(result)
     // aqui é onde as pessoas são filtradas
     const pessoasFiltradas = pessoas.filter((p) => p._id !== id)
-    console.log({ pessoasFiltradas })
     // aqui é o que faltou, o react precisa saber que deve atualizar as pessoas com o novo resultado
     setPessoas(pessoasFiltradas)
   }
@@ -71,5 +68,6 @@ export async function getStaticProps(context: any) {
     props: {
       listadePessoas,
     },
+    revalidate: 5
   }
 }
