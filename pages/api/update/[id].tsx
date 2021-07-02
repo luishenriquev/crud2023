@@ -4,14 +4,14 @@ import axios from 'axios'
 
 const update = async function (req: NextApiRequest, res: NextApiResponse,) {
 
-  const { nome } = req.body
-  console.log({ nome })
+  const { name } = req.body
+  console.log({ name })
   const { id } = req.query
 
-  console.log('pessoa pronta para atualizar', id, nome)
+  console.log('pessoa pronta para atualizar', id, name)
 
   const result = await axios.patch(`https://apinestjs.herokuapp.com/lista/${id}`, {
-    name: nome
+    name: name
   })
 
   console.log("result", result.data)

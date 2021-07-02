@@ -1,36 +1,38 @@
-import axios from 'axios'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { Pessoa } from 'types'
 import FormUpdate from './FormUpdate'
+import srvPessoa from 'services/pessoa'
 
 type Props = {
   pessoa: Pessoa
-  handleDelete: (id: string) => void
+  pessoas: Pessoa[]
+  setPessoas: any
+  // handleDelete: (id: string) => void
 }
 
-export default function Item({ pessoa, handleDelete }: Props) {
+export default function Item({ pessoa, pessoas, setPessoas }: Props) {
   const [editando, setEditando] = useState<boolean>(false)
-  function handleEditando(name:string){
+
+  function handleEditando(name: string) {
     // console.log(name)
     setEditando(true)
   }
-  async function handleUpdate(e:React.FormEvent<HTMLFormElement>){
-    // e.preventDefault()
-    const inputNome = e.currentTarget.elements[0] as HTMLInputElement
-      const novaPessoa = {
-        nome: inputNome.value
-      }
-      const { data: pessoaa } = await axios.patch(`/api/update/${pessoa._id}`, novaPessoa)
+
+  async function handleDelete(id: string) {
+    srvPessoa.remove(id)
+    const novaLista = pessoas.filter(p => id !== p._id)
+    setPessoas(novaLista)
   }
+
   return (
     <Wrapper>
       {!editando && <Name>{pessoa.name}</Name>}
-      {editando && <FormUpdate pessoa={pessoa} handleUpdate={handleUpdate}/>}
+      {editando && <FormUpdate pessoa={pessoa} pessoas={pessoas} setPessoas={setPessoas} setEditando={setEditando} />}
       <Controls>
-        {!editando && <Control onClick={()=> handleEditando(pessoa.name)}>Editar</Control>}
-        {editando && <Control onClick={()=>setEditando(false)}>cancelar</Control>}
-       {!editando && <Control onClick={() => handleDelete(pessoa._id)}>Excluir</Control>}
+        {!editando && <Control onClick={() => handleEditando(pessoa.name)}>Editar</Control>}
+        {editando && <Control onClick={() => setEditando(false)}>cancelar</Control>}
+        {!editando && <Control onClick={() => handleDelete(pessoa._id)}>Excluir</Control>}
       </Controls>
     </Wrapper>
   )

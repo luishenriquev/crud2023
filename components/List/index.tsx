@@ -6,16 +6,17 @@ import Item from './Item'
 
 type Props = {
   pessoas: Pessoa[]
-  handleDelete: (id: string) => void
+  setPessoas: any
+  // handleDelete: (id: string) => void
 }
 
-export default function List({ pessoas, handleDelete}: Props) {
+export default function List({ pessoas, setPessoas}: Props) {
 
   return (
     <Wrapper>
      {pessoas &&
         pessoas.map((p) => (
-          <Item key={p._id} pessoa={p} handleDelete={handleDelete}/>
+          <Item key={p._id} pessoa={p} pessoas={pessoas} setPessoas={setPessoas} />
       ))}
     </Wrapper>
   )

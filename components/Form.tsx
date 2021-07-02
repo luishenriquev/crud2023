@@ -2,10 +2,27 @@ import axios from 'axios'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { Pessoa } from 'types'
-type Props ={
-  handleSave: (e: React.FormEvent<HTMLFormElement>) => void
+import srvPessoa from 'services/pessoa'
+
+type Props = {
+  // handleSave: (e: React.FormEvent<HTMLFormElement>) => void
+  pessoas: Pessoa[]
+  setPessoas: any
 }
-export default function Form({handleSave}:Props) {
+export default function Form({ pessoas, setPessoas }: Props) {
+
+  async function handleSave(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+
+    const inputNome = e.currentTarget.elements[0] as HTMLInputElement
+
+    const pessoa = await srvPessoa.save(inputNome.value)
+
+    setPessoas([...pessoas, pessoa])
+
+    inputNome.value = ""
+  }
+
   return (
     <Wrapper>
       <Formm onSubmit={handleSave}>

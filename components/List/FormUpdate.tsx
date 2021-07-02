@@ -1,13 +1,38 @@
 import { useState } from "react"
 import styled from "styled-components"
 import { Pessoa } from "types"
+import srvPessoa from 'services/pessoa'
 
 type Props = {
   pessoa: Pessoa
-  handleUpdate: (e: React.FormEvent<HTMLFormElement>) => void
+  pessoas: Pessoa[]
+  setPessoas: any
+  setEditando: any
 }
-export default function FormUpdate({pessoa,handleUpdate}: Props){
-  return(
+export default function FormUpdate({ pessoa, pessoas, setPessoas, setEditando }: Props) {
+
+  async function handleUpdate(e: React.FormEvent<HTMLFormElement>,) {
+    e.preventDefault()
+    const inputNome = e.currentTarget.elements[0] as HTMLInputElement
+    const novaPessoa = {
+      ...pessoa,
+      name: inputNome.value
+    }
+    await srvPessoa.update(novaPessoa)
+
+    const listaAtualizada = pessoas.map(p => {
+      if (p._id === pessoa._id) {
+        return novaPessoa
+      }
+      return p
+    })
+
+    setPessoas(listaAtualizada)
+
+    setEditando(false)
+  }
+
+  return (
     <Formm onSubmit={handleUpdate}>
       <Input defaultValue={pessoa.name} />
       <Button type='submit'>Salvar</Button>

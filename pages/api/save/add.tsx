@@ -4,7 +4,7 @@ import axios from 'axios'
 const add = async function (req: NextApiRequest, res: NextApiResponse) {
   const pessoa = {
 
-    name: req.body.nome,
+    name: req.body.name,
    // name: JSON.parse(req.body).nome,
   }
   console.log('Pessoa pronta para salvar', pessoa)
