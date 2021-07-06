@@ -1,22 +1,17 @@
-import axios from 'axios'
-import { useState } from 'react'
 import styled from 'styled-components'
-import { Pessoa } from 'types'
 import Item from './Item'
+import { useAppContext } from 'context/AppContext'
 
-type Props = {
-  pessoas: Pessoa[]
-  setPessoas: any
-  // handleDelete: (id: string) => void
-}
-
-export default function List({ pessoas, setPessoas}: Props) {
+export default function List() {
+  const { pessoas, setPessoas } = useAppContext()
 
   return (
     <Wrapper>
-     {pessoas &&
-        pessoas.map((p) => (
-          <Item key={p._id} pessoa={p} pessoas={pessoas} setPessoas={setPessoas} />
+      {pessoas.map((p) => (
+        <Item
+          key={p._id}
+          pessoa={p}
+        />
       ))}
     </Wrapper>
   )

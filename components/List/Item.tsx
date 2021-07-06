@@ -3,16 +3,17 @@ import styled from 'styled-components'
 import { Pessoa } from 'types'
 import FormUpdate from './FormUpdate'
 import srvPessoa from 'services/pessoa'
+import { useAppContext } from 'context/AppContext'
 
 type Props = {
   pessoa: Pessoa
-  pessoas: Pessoa[]
-  setPessoas: any
   // handleDelete: (id: string) => void
 }
 
-export default function Item({ pessoa, pessoas, setPessoas }: Props) {
+export default function Item({ pessoa }: Props) {
   const [editando, setEditando] = useState<boolean>(false)
+
+  const { pessoas, setPessoas } = useAppContext()
 
   function handleEditando(name: string) {
     // console.log(name)
@@ -21,18 +22,31 @@ export default function Item({ pessoa, pessoas, setPessoas }: Props) {
 
   async function handleDelete(id: string) {
     srvPessoa.remove(id)
-    const novaLista = pessoas.filter(p => id !== p._id)
+    const novaLista = pessoas.filter((p) => id !== p._id)
     setPessoas(novaLista)
   }
 
   return (
     <Wrapper>
       {!editando && <Name>{pessoa.name}</Name>}
-      {editando && <FormUpdate pessoa={pessoa} pessoas={pessoas} setPessoas={setPessoas} setEditando={setEditando} />}
+      {editando && (
+        <FormUpdate
+          pessoa={pessoa}
+          pessoas={pessoas}
+          setPessoas={setPessoas}
+          setEditando={setEditando}
+        />
+      )}
       <Controls>
-        {!editando && <Control onClick={() => handleEditando(pessoa.name)}>Editar</Control>}
-        {editando && <Control onClick={() => setEditando(false)}>cancelar</Control>}
-        {!editando && <Control onClick={() => handleDelete(pessoa._id)}>Excluir</Control>}
+        {!editando && (
+          <Control onClick={() => handleEditando(pessoa.name)}>Editar</Control>
+        )}
+        {editando && (
+          <Control onClick={() => setEditando(false)}>cancelar</Control>
+        )}
+        {!editando && (
+          <Control onClick={() => handleDelete(pessoa._id)}>Excluir</Control>
+        )}
       </Controls>
     </Wrapper>
   )
@@ -56,7 +70,7 @@ const Name = styled.div``
 const Controls = styled.section`
   height: 0;
   overflow: hidden;
-  transition: .2s;
+  transition: 0.2s;
 `
 
 const Control = styled.button`

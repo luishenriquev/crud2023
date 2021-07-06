@@ -1,15 +1,9 @@
-import axios from 'axios'
-import { useState } from 'react'
 import styled from 'styled-components'
-import { Pessoa } from 'types'
 import srvPessoa from 'services/pessoa'
+import { useAppContext } from 'context/AppContext'
 
-type Props = {
-  // handleSave: (e: React.FormEvent<HTMLFormElement>) => void
-  pessoas: Pessoa[]
-  setPessoas: any
-}
-export default function Form({ pessoas, setPessoas }: Props) {
+export default function Form() {
+  const { pessoas, setPessoas } = useAppContext()
 
   async function handleSave(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -20,7 +14,7 @@ export default function Form({ pessoas, setPessoas }: Props) {
 
     setPessoas([...pessoas, pessoa])
 
-    inputNome.value = ""
+    inputNome.value = ''
   }
 
   return (

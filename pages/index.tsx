@@ -3,23 +3,29 @@ import Header from 'components/Header'
 import List from 'components/List'
 import Form from 'components/Form'
 import Footer from 'components/Footer'
-import { Pessoa } from 'types'
-import React, { useState } from 'react'
+import React from 'react'
+import { useAppContext } from 'context/AppContext'
+import { useEffect } from 'react'
 import srvPessoa from 'services/pessoa'
+import { Pessoa } from 'types'
 
 type Props = {
-  listadePessoas: Pessoa[]
+  listaDePessoas: Pessoa[]
 }
 
-export default function Home({ listadePessoas }: Props) {
-  const [pessoas, setPessoas] = useState<Pessoa[]>(listadePessoas)
+export default function Home({ listaDePessoas }: Props) {
+  const { setPessoas } = useAppContext()
+
+  useEffect(() => {
+    setPessoas(listaDePessoas)
+  }, [])
 
   return (
     <Wrapper>
       <Container>
         <Header />
-        <List pessoas={pessoas} setPessoas={setPessoas}  />
-        <Form pessoas={pessoas} setPessoas={setPessoas} />
+        <List />
+        <Form />
         <Footer />
       </Container>
     </Wrapper>
@@ -39,14 +45,11 @@ const Container = styled.div`
   }
 `
 
-export async function getStaticProps(context: any) {
+export async function getServerSideProps(context: any) {
   const pessoas = await srvPessoa.list()
-
-  console.log(pessoas)
   return {
     props: {
-      listadePessoas: pessoas,
+      listaDePessoas: pessoas,
     },
-    revalidate: 5
   }
 }

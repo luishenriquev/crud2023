@@ -14,10 +14,10 @@ const remove = async (id: string) => {
 
 const save = async (name: string): Promise<Pessoa> => {
   const novaPessoa = {
-    name
+    name,
   }
   const { data: pessoa } = await axios.post('/api/save/add', novaPessoa)
-  
+
   return pessoa
 }
 
@@ -25,15 +25,14 @@ const update = async (pessoa: Pessoa) => {
   console.log({ pessoa })
   const { data } = await axios.patch(`/api/update/${pessoa._id}`, pessoa)
 
-  console.log("pessoa:", pessoa)
+  console.log('pessoa:', pessoa)
 }
 
 const service = {
   list,
   remove,
   save,
-  update
+  update,
 }
 
 export default service
-
