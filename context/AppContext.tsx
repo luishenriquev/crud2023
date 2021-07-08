@@ -9,9 +9,9 @@ type InicialState = {
 }
 
 // INICIAL VALUE
-const initialState = {
+const initialState: InicialState = {
   pessoas: [],
-  setPessoas: ([]) => {},
+  setPessoas: ([]) => { }
 }
 
 // CONTEXT
@@ -22,9 +22,9 @@ export const AppWrapper: React.FC = ({ children }) => {
   const [pessoas, setPessoas] = useState<Pessoa[]>([])
 
   // PULO DO GATO
-  let sharedState = {
+  let sharedState: InicialState = {
     pessoas,
-    setPessoas,
+    setPessoas
   }
 
   return (

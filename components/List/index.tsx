@@ -3,7 +3,7 @@ import Item from './Item'
 import { useAppContext } from 'context/AppContext'
 
 export default function List() {
-  const { pessoas, setPessoas } = useAppContext()
+  const { pessoas } = useAppContext()
 
   return (
     <Wrapper>
