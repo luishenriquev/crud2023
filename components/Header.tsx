@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export default function Header() {
   return (
     <Wrapper>
-      <Title>CRUD 2021</Title>
+      <Title>CRUD 2023</Title>
       <Subtitle>Crie, Edit, Liste e Apaque pessoas</Subtitle>
     </Wrapper>
   )
