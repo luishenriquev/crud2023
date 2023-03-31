@@ -5,7 +5,7 @@ const delet = async function (req: NextApiRequest, res: NextApiResponse) {
 
     const { id } = req.query
     console.log({id})
-    const result = await axios.delete(`https://apinestjs.herokuapp.com/lista/${id}`)
+    const result = await axios.delete(`https://api-ashen-xi.vercel.app/lista/${id}`)
 
     // console.log("result", result.data)
     res.send(result.data)

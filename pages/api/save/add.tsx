@@ -8,7 +8,7 @@ const add = async function (req: NextApiRequest, res: NextApiResponse) {
    // name: JSON.parse(req.body).nome,
   }
   console.log('Pessoa pronta para salvar', pessoa)
-  const result = await axios.post('https://apinestjs.herokuapp.com/lista', pessoa)
+  const result = await axios.post('https://api-ashen-xi.vercel.app/lista', pessoa)
   console.log("result", result.data)
   res.send(result.data)
 }

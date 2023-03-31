@@ -3,7 +3,7 @@ import { Pessoa } from 'types'
 
 const list = async (): Promise<Pessoa[]> => {
   const { data: listadePessoas } = await axios.get(
-    'https://apinestjs.herokuapp.com/lista',
+    'https://api-ashen-xi.vercel.app/lista',
   )
   return listadePessoas
 }

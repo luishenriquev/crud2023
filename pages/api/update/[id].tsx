@@ -10,7 +10,7 @@ const update = async function (req: NextApiRequest, res: NextApiResponse,) {
 
   console.log('pessoa pronta para atualizar', id, name)
 
-  const result = await axios.patch(`https://apinestjs.herokuapp.com/lista/${id}`, {
+  const result = await axios.patch(`https://api-ashen-xi.vercel.app/lista/${id}`, {
     name: name
   })
 
