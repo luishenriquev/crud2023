@@ -1,4 +1,8 @@
 
+link para acessar: https://crud2021.vercel.app/
+
+
+
 É preciso rodar a api para funcionar 
 
 
